@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Blog</title>
+	</head>
+
+	<body>
+		<h1>Blog System</h1>
+
+		<div>
+			<% for(let x=0;x<cont.length;x++){ %>
+			<img src=${cont[x].image}/>
+			<br>
+			<p>${cont[x].content}</p>
+			<% } %>
+		</div>
+	</body>
+</html>
+
