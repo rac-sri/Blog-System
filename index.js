@@ -13,7 +13,7 @@ mongoose.connect('mongodb://localhost/user',{useNewUrlParser : "true"})
 	.catch(()=>console.log("Failed to open"));
 
 const schema = {
-	image:{data:Buffer , contentType : String},
+	image:String,
 	title:String,
 	category:String,
 	body:String
@@ -33,13 +33,13 @@ app.post('/upload' , upload.single('pic'), async function(req , res ,next)
 {
 	let body = req.body.content.replace("<p>","").replace("</p>" , "");
 	let d = new data({
-		image:req.file.path , 
+		image:req.file.path, 
 		title: req.body.title,
 		category:req.body.category,
 		body:body
 	});
-	console.log(d.image);
 	await d.save();
+	res.send("Done");
 });
 
 app.get('/appPost' , (req , res)=>{
