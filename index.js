@@ -13,8 +13,10 @@ mongoose.connect('mongodb://localhost/user',{useNewUrlParser : "true"})
 	.catch(()=>console.log("Failed to open"));
 
 const schema = {
-	image:{data:Buffer ,content-type : String},
-	content:String
+	image:{data:Buffer , contentType : String},
+	title:String,
+	category:String,
+	body:String
 }
 
 const data = mongoose.model('blog',schema);
@@ -27,13 +29,21 @@ app.get('/', async (req , res)=>
 	res.render('index',{cont:cont});
 } );
 
-app.post('/upload' , upload.single('avatar'), async function(req , res ,next)
+app.post('/upload' , upload.single('pic'), async function(req , res ,next)
 {
+	let body = req.body.content.replace("<p>","").replace("</p>" , "");
 	let d = new data({
-		image:req.file , 
-		content: req.body
+		image:req.file.path , 
+		title: req.body.title,
+		category:req.body.category,
+		body:body
 	});
+	console.log(d.image);
 	await d.save();
-}
+});
+
+app.get('/appPost' , (req , res)=>{
+	res.render('addPost');
+})
 
 app.listen(3000,()=>console.log("server on"));
