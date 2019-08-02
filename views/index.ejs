@@ -13,11 +13,11 @@
 
 		<div>
 			<% for(let x=0;x<cont.length;x++){ %>
-			<img src="${cont[x].image}"/>
+			<img src="<%= cont[x].image %>"/>
 			<br>
-			<p>${cont[x].title}</p>
-			<p>${cont[x].category}</p>
-			<p>${cont[x].body}</p>
+			<p><%= cont[x].title %></p>
+			<p><%= cont[x].category%></p>
+			<p><%= cont[x].body%></p>
 			<% } %>
 		</div>
 	</body>

@@ -4,9 +4,12 @@ const multer = require('multer');
 const moment = require('moment');
 const path = require('path');
 const app = express();
-const upload = multer({dest:'uploads/'})
+const upload = multer({dest:'public/uploads/'})
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+app.use(express.static('public'));
+
 
 mongoose.connect('mongodb://localhost/user',{useNewUrlParser : "true"})
 	.then(()=>console.log("Connected to mongoDb"))
@@ -31,9 +34,10 @@ app.get('/', async (req , res)=>
 
 app.post('/upload' , upload.single('pic'), async function(req , res ,next)
 {
-	let body = req.body.content.replace("<p>","").replace("</p>" , "");
+	let body = req.body.content.replace("<p>","").replace("</p>" , "").replace("public/","");
+	let imagePath = req.file.path.replace("public","");
 	let d = new data({
-		image:req.file.path, 
+		image:imagePath, 
 		title: req.body.title,
 		category:req.body.category,
 		body:body
